@@ -11,13 +11,11 @@ app.get('/',function(req,res){
 })
 
 app.post('/success', (req,res)=>{
-    res.render('success',{ejs1:"Successfully Registered!"});
+    // let data = {};
+    // data.
+    let jsonObj = JSON.stringify(req.body);
+    res.render('success',{ejs1:jsonObj});
 })
-
-
-
-
-
 
 
 
