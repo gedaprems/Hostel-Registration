@@ -1,0 +1,12 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+
+.form-div{
+    width: 50%;
+}
+.form-element{
+    margin-top: 40px;
+}
