@@ -5,8 +5,19 @@ body{
 
 
 .form-div{
-    width: 50%;
+    width: 60%;
 }
 .form-element{
     margin-top: 40px;
+}
+
+label{
+    font-weight: bold;
+    color: #333;
+}
+
+.successCenter{
+    width: 80%;
+    margin: 30px auto;
+    text-align: center;
 }

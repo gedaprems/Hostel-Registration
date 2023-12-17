@@ -1,4 +1,4 @@
-<form class="form-element">
+<form class="form-element" method="POST" action="/success">
     <div class="form-row">
       <div class="col-md-8 mb-2">
         <label for="16prn">16 Digit PRN</label>
@@ -55,14 +55,24 @@
     </select>
   </div>
 
-  <div class="form-group">
-    <label for="exampleFormControlSelect1">Academic Year</label>
-    <select class="form-control" id="exampleFormControlSelect1">
+  <div class="form-row">
+    <div class="col-md-4 mb-2">
+      <label for="academicyear">Academic Year</label>
+    <select class="form-control" id="academicyear" name="academicyear" required>
       <option>1</option>
       <option>2</option>
       <option>3</option>
       <option>4</option>
     </select>
+    </div>
+    <div class="col-md-8 mb-2">
+      <label for="marks">Last Semester Marks</label>
+      <input type="text" class="form-control" id="marks" placeholder="Last Sem Marks / 12th Marks / Diploma Marks" required>
+    </div>
+  </div>
+
+  <div class="form-group">
+    
   </div>
 
     <!-- ---------- -->
@@ -84,7 +94,8 @@
       <div class="form-check">
         <input class="form-check-input" type="checkbox" value="" id="terms" required>
         <label class="form-check-label" for="terms">
-          Agree to terms and conditions
+          I hereby declare that the information provided is true and correct. I also understand that any willful
+dishonesty may render for refusal of this application or may charge you some penalty.
         </label>
       </div>
     </div>
