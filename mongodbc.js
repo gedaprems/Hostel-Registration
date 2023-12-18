@@ -1,18 +1,58 @@
-const express = require('express');
 const mongoose = require('mongoose');
 
 
-mongoose.connect("mongodb+srv://gedamprems2:<password>@cluster0.hieyltz.mongodb.net/?retryWrites=true&w=majority");
+const insertNewUser = async (data, year, dbname) => {
 
-const userlogin = new mongoose.Schema({
-    name : String,
-    rating: Number
-});
+    try {
+        await mongoose.connect("mongodb://127.0.0.1:27017/" + dbname);
 
-const user  = mongoose.model("user",userlogin);
-const newUser = new user({
-    name: "Premagar Gedam",
-    rating: 12
-});
+        const userData = new mongoose.Schema({
+            prn: String,
+            phoneno: String,
+            firstName: String,
+            middleName: String,
+            lastName: String,
+            dob: String,
+            gender: String,
+            branch: String,
+            academicyear: String,
+            marks: String,
+            city: String,
+            state: String,
+            zip: String
+        });
 
-newUser.save();
+        const userModel = mongoose.model(year, userData);
+        const newUser = new userModel({
+            prn: data.prn,
+            phoneno: data.phoneno,
+            firstName: data.firstName,
+            middleName: data.middleName,
+            lastName: data.lastName,
+            dob: data.dob,
+            gender: data.gender,
+            branch: data.branch,
+            academicyear: data.academicyear,
+            marks: data.marks,
+            city: data.city,
+            state: data.state,
+            zip: data.zip
+        });
+
+
+        newUser.save();
+
+        return "Suceess";
+
+
+    }
+    catch (e) {
+        return "Failed";
+    }
+
+
+
+}
+
+
+module.exports = insertNewUser;

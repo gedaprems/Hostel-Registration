@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const bodyTOObj = require('./scripts/jsobj.js');
+const insertNewUser = require('./mongodbc.js');
 
 const app = express();
 
@@ -15,10 +17,14 @@ app.get('/',function(req,res){
 })
 
 app.post('/success', (req,res)=>{
-    // let data = {};
-    // data.
-    let jsonObj = JSON.stringify(req.body);
-    res.render('success',{ejs1:jsonObj});
+    
+    let data = bodyTOObj(req.body);
+    insertNewUser(data,data.academicyear,data.branch).then((output)=>{
+        console.log(output);
+        res.render('success',{ejs1:output});
+    });
+
+    
 })
 
 
