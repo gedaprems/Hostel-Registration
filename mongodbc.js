@@ -17,6 +17,7 @@ const insertNewUser = async (data, year, dbname) => {
             branch: String,
             academicyear: String,
             marks: String,
+            totalMarks: String,
             city: String,
             state: String,
             zip: String
@@ -34,6 +35,7 @@ const insertNewUser = async (data, year, dbname) => {
             branch: data.branch,
             academicyear: data.academicyear,
             marks: data.marks,
+            totalMarks: data.totalMarks,
             city: data.city,
             state: data.state,
             zip: data.zip

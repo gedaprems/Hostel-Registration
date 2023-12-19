@@ -21,3 +21,14 @@ label{
     margin: 30px auto;
     text-align: center;
 }
+
+.submitCenter{
+    padding: 10px auto;
+    margin: 50px auto;
+    text-align: center;
+    justify-content: center;
+}
+
+.insideform{
+    display: none;
+}

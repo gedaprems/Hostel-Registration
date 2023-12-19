@@ -59,15 +59,19 @@
     <div class="col-md-4 mb-2">
       <label for="academicyear">Academic Year</label>
     <select class="form-control" id="academicyear" name="academicyear" required>
-      <option value="first">1</option>
-      <option value="second">2</option>
-      <option value="third">3</option>
-      <option value="fourth">4</option>
+      <option value="first">First</option>
+      <option value="second">Second</option>
+      <option value="third">Third</option>
+      <option value="fourth">Fourth</option>
     </select>
     </div>
-    <div class="col-md-8 mb-2">
-      <label for="marks">Last Semester Marks</label>
-      <input type="text" class="form-control" id="marks" name="marks" placeholder="Last Sem Marks / 12th Marks / Diploma Marks" required>
+    <div class="col-md-4 mb-2">
+      <label for="marks">Total Marks</label>
+      <input type="text" class="form-control" id="marks" name="marks" placeholder="Last Sem / 12th / Diploma Marks" required>
+    </div>
+    <div class="col-md-4 mb-2">
+      <label for="marks">Outoff Marks</label>
+      <input type="text" class="form-control" id="totalmarks" name="totalmarks" placeholder="Outoff Marks " value=600 required>
     </div>
   </div>
 
@@ -99,5 +103,10 @@ dishonesty may render for refusal of this application or may charge you some pen
         </label>
       </div>
     </div>
-    <button class="btn btn-primary" type="submit">Submit form</button>
+    <button id="insidesubmit" class="insideform">Submit form</button>
+    
   </form>
+  <div class="submitCenter">
+    <button id="submit" class="btn btn-primary">Submit form</button>
+  </div>
+  

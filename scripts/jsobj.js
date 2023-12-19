@@ -1,7 +1,7 @@
 
 const bodyToObj = (body) =>{
     const data = {
-        name: body.firstname,
+        firstName: body.firstname,
         middleName: body.middlename,
         lastName: body.lastname,
         prn: body.prn,
@@ -11,6 +11,7 @@ const bodyToObj = (body) =>{
         branch: body.branch,
         academicyear: body.academicyear,
         marks: body.marks,
+        totalMarks: body.totalmarks,
         city: body.city,
         state: body.state,
         zip: body.zip
