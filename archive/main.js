@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const insertNewUser = require('./mongodbc.js');
+const insertNewUser = require('../mongodbc.js');
 
 const data = {
     name: "Rahul",

@@ -1,10 +1,23 @@
 <!-- Image and text -->
 <nav class="navbar navbar-light bg-light">
-    <div class="container">
-        <a class="navbar-brand" href="/">
-            <img src="img/bunk-bed.png" width="30" height="30" class="d-inline-block align-top" alt="">
-            Hostel Registration
-          </a>
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <img src="img/bunk-bed.png" width="30" height="30" class="d-inline-block align-top" alt="">
+      Hostel Registration
+
+    </a>
+    <div class="d-inline-block">
+      <form id="loginForm" action="/login" class="d-inline-block" method="POST">
+        <input type="text" name="userid" id="userid" placeholder="UserId">
+        <input type="password" name="password" id="password" placeholder="Password">
+      </form>
+      <button class="btn btn-success" id="loginButton" onclick="login()">Login</button>
+
     </div>
     
-  </nav>
+    
+
+
+  </div>
+
+</nav>

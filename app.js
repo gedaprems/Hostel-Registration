@@ -2,7 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const bodyTOObj = require('./scripts/jsobj.js');
-const insertNewUser = require('./mongodbc.js');
+const insertNewUser = require('./mongodbinsertdata.js');
+const isValidUser = require('./mongodblogin.js');
 
 const app = express();
 
@@ -14,6 +15,21 @@ app.use(express.urlencoded({extended:true}));
 
 app.get('/',function(req,res){
     res.render('index',{ejs1:"Hello Everyone",title:"Home | Hostel Registration"});
+})
+
+app.post('/login', (req,res)=>{
+    const userid = req.body.userid;
+    const password = req.body.password;
+
+    const output = isValidUser(userid,password);
+    console.log("Login "+output);
+    if( output == true){
+        res.send("Sucess "+userid);
+    }else{
+        res.send(output);
+    }
+    
+    
 })
 
 app.post('/success', (req,res)=>{
