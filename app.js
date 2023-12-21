@@ -3,15 +3,31 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const bodyTOObj = require('./scripts/jsobj.js');
 const insertNewUser = require('./mongodbinsertdata.js');
-const isValidUser = require('./mongodblogin.js');
+const isValidUser = require('./utils/isValidUser.js');
 
 const app = express();
-
 
 
 app.set('view engine','ejs');
 app.use(express.static('public'))
 app.use(express.urlencoded({extended:true}));
+
+
+// Model creation -----------------
+
+mongoose.connect("mongodb://127.0.0.1:27017/login");
+
+const loginSchema = new mongoose.Schema({
+    userid: String,
+    password: String
+});
+
+const loginModel = mongoose.model("user", loginSchema);
+
+
+
+
+// Routes ---------
 
 app.get('/',function(req,res){
     res.render('index',{ejs1:"Hello Everyone",title:"Home | Hostel Registration"});
@@ -21,13 +37,17 @@ app.post('/login', (req,res)=>{
     const userid = req.body.userid;
     const password = req.body.password;
 
-    const output = isValidUser(userid,password);
-    console.log("Login "+output);
-    if( output == true){
-        res.send("Sucess "+userid);
-    }else{
-        res.send(output);
-    }
+    isValidUser(loginModel, userid, password, function(output){
+        
+        if( output == true){
+            res.render('login',{msg:"Sucessully Logged In!",title:"Logged In"});
+        }else if(output == false){
+            res.render('error',{msg:"Invalid Password !",title:"Error Page"});
+        }else{
+            res.render('error',{msg:output,title:"Error Page"});
+        }
+    });
+    
     
     
 })
@@ -38,7 +58,7 @@ app.post('/success', (req,res)=>{
     console.log(JSON.stringify(data));
     insertNewUser(data,data.academicyear,data.branch).then((output)=>{
         console.log(output);
-        res.render('success',{ejs1:output,title:"Success"});
+        res.render('success',{msg:output,title:"Success"});
     });
 
     
