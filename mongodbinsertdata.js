@@ -49,7 +49,7 @@ const insertNewUser = async (data, year, dbname) => {
 
     }
     catch (e) {
-        return "Failed";
+        return e;
     }
 
 

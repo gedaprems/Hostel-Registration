@@ -25,12 +25,12 @@ const loginSchema = new mongoose.Schema({
 const loginModel = mongoose.model("user", loginSchema);
 
 
-
+let msg = ""
 
 // Routes ---------
 
 app.get('/',function(req,res){
-    res.render('index',{ejs1:"Hello Everyone",title:"Home | Hostel Registration"});
+    res.render('index',{msg:msg,title:"Home | Hostel Registration"});
 })
 
 app.post('/login', (req,res)=>{
@@ -40,11 +40,16 @@ app.post('/login', (req,res)=>{
     isValidUser(loginModel, userid, password, function(output){
         
         if( output == true){
+            msg = "";
             res.render('login',{msg:"Sucessully Logged In!",title:"Logged In"});
         }else if(output == false){
-            res.render('error',{msg:"Invalid Password !",title:"Error Page"});
+            msg = "Invalid Password !";
+            res.redirect('/');
+            
         }else{
-            res.render('error',{msg:output,title:"Error Page"});
+            msg = output;
+            res.redirect('/');
+            
         }
     });
     
