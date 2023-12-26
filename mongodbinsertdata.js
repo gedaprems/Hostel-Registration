@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const insertNewUser = async (data, year, dbname) => {
 
     try {
-        await mongoose.connect("mongodb://127.0.0.1:27017/" + dbname);
+        let conn = await mongoose.createConnection("mongodb://127.0.0.1:27017/" + dbname);
 
         const userData = new mongoose.Schema({
             prn: String,
@@ -23,7 +23,7 @@ const insertNewUser = async (data, year, dbname) => {
             zip: String
         });
 
-        const userModel = mongoose.model(year, userData);
+        const userModel = conn.model(year, userData);
         const newUser = new userModel({
             prn: data.prn,
             phoneno: data.phoneno,
