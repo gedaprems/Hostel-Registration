@@ -1,17 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-    <%- include('partials/header') -%>
+    <!-- <%- include('partials/header') -%> -->
 <body>
-    <div class="container">
+    <!-- <div class="container">
         <form action="/demosuccess" method="POST">
             <input type="text" name="data" id="data">
             
         </form>
         <button id="submit">Submit</button>
         <p id="error"></p>
-    </div>
+    </div> -->
 
-    <script src="js/authentication.js"></script>
-    
+    <p id="data"></p>
+
+
+
+    <!-- <script src="js/authentication.js"></script> -->
+    <script>
+        // $("#submit").click(()=>{
+        //     $("form").submit();
+        // })
+
+        // -----------------------------
+
+        fetch("/list",(err,data)=>{
+            $("#data").html(data);
+        })
+    </script>
 </body>
 </html>

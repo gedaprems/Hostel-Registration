@@ -143,12 +143,37 @@ app.post('/success', (req,res)=>{
 
 
 app.get('/demo', (req,res)=>{
-    res.render('demo',{title:"Demo"});
+    
+    res.render('list',{msg:"list",title:"list"});
 })
 
-app.post('/demosuccess',(req,res)=>{
-    let msg = req.body.data;
-    res.send(msg);
+app.get('/list',(req,res)=>{
+
+    const conn = mongoose.createConnection("mongodb://127.0.0.1:27017/cse");
+    const userData = new mongoose.Schema({
+        prn: String,
+        phoneno: String,
+        firstName: String,
+        middleName: String,
+        lastName: String,
+        dob: String,
+        gender: String,
+        branch: String,
+        academicyear: String,
+        marks: String,
+        totalMarks: String,
+        city: String,
+        state: String,
+        zip: String
+    });
+
+    const userModel = conn.model("first", userData);
+    userModel.find({}, function(err,data){
+        if(err) res.send(err);
+        res.send(data);
+    })
+
+    
 })
 
 app.listen(3000,function(){

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <title>
+        <%= title %>
+    </title>
+</head>
+
+<body>
+    <%= msg %>
+        <div id="list"></div>
+        <script>
+            let list = [];
+            let data = fetch("/list");
+            data.then((response) => {
+                return response.json();
+            })
+                .then((response) => {
+                    // $("#list").html(`<p>${response}</p>`);
+                    let str = ""
+                    response.forEach((element) => {
+                        str+=`<p>${element._id}</p>`;
+                        console.log(element._id);
+                    });
+
+                    $("#list").html(str);
+
+                    console.log(response);
+                })
+
+            // list.forEach((element) => {
+            //     console.log(element.prn);
+            // });
+        </script>
+</body>
+
+</html>
