@@ -1,16 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <%- include('partials/header') -%>
-<body>
 
-    <%- include('partials/navbar') -%>
+    <body>
 
-    <div class="successCenter">
-        <h1><%= msg %></h1>
-    </div>
-    <!-- <a href="/login">login</a> -->
+        <%- include('partials/navbar') -%>
 
-    
-    
-</body>
+            <div class="container">
+                <div class="successCenter">
+                    <h1>
+                        <%= msg %>
+                    </h1>
+                    <input type="text" id="branch" placeholder="Branch">
+                    <input type="text" id="year" placeholder="Year">
+                    <button onclick="fetchData()">Fetch Data</button>
+                    <div id="data"></div>
+                </div>
+
+
+
+            </div>
+
+
+
+
+
+            <script>
+
+                function fetchData() {
+                    const branch = document.getElementById("branch").value;
+                    const year = document.getElementById("year").value;
+
+                    if (branch == "" || year == "") {
+                        return;
+                    }
+
+                    var link = `/list?branch=${branch}&year=${year}`
+
+                    var request = new XMLHttpRequest();
+
+                    request.open('GET', link, true);
+
+                    request.onload = function () {
+                        var obj = JSON.parse(this.response);
+                        console.log(obj);
+                        let str = ""
+                        obj.forEach((element) => {
+                            str += `<p id=${element._id}> ${element.firstName} | ${element.lastName} | ${element.gender}| ${element.city} | ${element.marks} | ${element.academicyear}</p>`;
+                            
+                        })
+
+                        $("#data").html(str);
+                        // $("#data").html(obj[0]._id);
+                    }
+                    request.send();
+                }
+
+
+
+
+            </script>
+
+
+    </body>
+
 </html>

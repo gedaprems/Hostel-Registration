@@ -1,31 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-    <!-- <%- include('partials/header') -%> -->
-<body>
-    <!-- <div class="container">
-        <form action="/demosuccess" method="POST">
-            <input type="text" name="data" id="data">
-            
-        </form>
-        <button id="submit">Submit</button>
-        <p id="error"></p>
-    </div> -->
+<%- include('partials/header') -%>
 
+
+<body>
+
+    <input type="text" id="branch">
+    <input type="text" id="year">
+    <button onclick="fetchData()">Fetch Data</button>
     <p id="data"></p>
 
 
 
-    <!-- <script src="js/authentication.js"></script> -->
     <script>
-        // $("#submit").click(()=>{
-        //     $("form").submit();
-        // })
 
-        // -----------------------------
+        function fetchData() {
+            const branch = document.getElementById("branch").value;
+            const year = document.getElementById("year").value;
 
-        fetch("/list",(err,data)=>{
-            $("#data").html(data);
-        })
+            if(branch== "" || year ==""){
+                return;
+            }
+
+            var link = `/list?branch=${branch}&year=${year}`
+
+            var request = new XMLHttpRequest();
+
+            request.open('GET', link, true);
+
+            request.onload = function () {
+                var obj = JSON.parse(this.response);
+                console.log(obj);
+                let str = ""
+                obj.forEach((element) => {
+                    str += `<p>${element._id}</p>`;
+                    console.log(element._id);
+                })
+
+                $("#data").html(str);
+                // $("#data").html(obj[0]._id);
+            }
+            request.send();
+        }
+
+
+
+
     </script>
 </body>
+
 </html>

@@ -36,7 +36,7 @@ let msg = ""
 // Routes ---------
 
 app.get('/',function(req,res){
-    res.render('index',{msg:msg,title:"Home | Hostel Registration"});
+    res.render('index',{msg:msg,title:"Home | Hostel Registration",login:true});
 })
 
 app.get('/login', (req,res)=>{
@@ -50,7 +50,7 @@ app.get('/login', (req,res)=>{
     // need to add user is still present in the data base  or not! 
 
     fs.readFile('./session/session.json','utf8',(err,data)=>{
-        console.log(data);
+        // console.log(data);
         const obj = JSON.parse(data);
 
         if(obj[sessionToken]){
@@ -58,7 +58,7 @@ app.get('/login', (req,res)=>{
                 msg="Session got Expired!";
                 res.redirect('/');
             }
-            res.render('login',{msg:"Sucessully Logged In and Session is stored!",title:"Logged In"});
+            res.render('login',{msg:"Sucessully Logged In and Session is stored!",title:"Logged In",login:false});
         }else{
             msg="Session got Expired!";
             res.redirect('/');
@@ -85,7 +85,7 @@ app.post('/login', (req,res)=>{
 
             if(sessionTokenOld){
                 // need to add user still present in data base or not / they updated the password and username or etc or the session is with same user or not
-                res.render('login',{msg:"Sucessully Logged In and Session is stored!",title:"Logged In"});
+                res.render('login',{msg:"Sucessully Logged In and Session is stored!",title:"Logged In",login:false});
             }
             // Session Creation
             const sessionToken = uuid.v4();
@@ -108,7 +108,7 @@ app.post('/login', (req,res)=>{
                         res.redirect("/");
                     }
                     res.cookie("session_token", sessionToken, {maxAge: expiresAt});
-                    res.render('login',{msg:"Sucessully Logged In ans Session is stored!",title:"Logged In"});
+                    res.render('login',{msg:"Sucessully Logged In and Session is stored!",title:"Logged In",login:false});
                 })
             })
 
@@ -135,7 +135,7 @@ app.post('/success', (req,res)=>{
     console.log(JSON.stringify(data));
     insertNewUser(data,data.academicyear,data.branch).then((output)=>{
         console.log(output);
-        res.render('success',{msg:output,title:"Success"});
+        res.render('success',{msg:output,title:"Success",login:true});
     });
 
     
@@ -144,12 +144,15 @@ app.post('/success', (req,res)=>{
 
 app.get('/demo', (req,res)=>{
     
-    res.render('list',{msg:"list",title:"list"});
+    res.render('demo',{msg:"list",title:"list",login:true});
 })
 
-app.get('/list',(req,res)=>{
+app.get('/list',async (req,res)=>{
 
-    const conn = mongoose.createConnection("mongodb://127.0.0.1:27017/cse");
+    const db = req.query.branch;
+    const table = req.query.year;
+
+    const conn = await mongoose.createConnection("mongodb://127.0.0.1:27017/"+db);
     const userData = new mongoose.Schema({
         prn: String,
         phoneno: String,
@@ -167,7 +170,7 @@ app.get('/list',(req,res)=>{
         zip: String
     });
 
-    const userModel = conn.model("first", userData);
+    const userModel = await conn.model(table, userData);
     userModel.find({}, function(err,data){
         if(err) res.send(err);
         res.send(data);
