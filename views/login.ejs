@@ -85,7 +85,6 @@
 
                         request.onload = function () {
                             var obj = JSON.parse(this.response);
-                            console.log(obj);
                             let str = ""
                             obj.forEach((element) => {
                                 str += `<p id=${element._id}> ${element.firstName} | ${element.lastName} | ${element.gender}| ${element.city} | ${element.marks} | ${element.academicyear}</p>`;
@@ -113,7 +112,7 @@
                 fetchData("ee", "ee-student");
                 fetchData("ece", "ece-student");
                 fetchData("ie", "ie-student");
-                // fetchData("me", "seconds", "me-student");
+                
 
 
 
