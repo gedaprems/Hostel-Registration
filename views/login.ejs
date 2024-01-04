@@ -17,8 +17,45 @@
                     <div id="data"></div>
                 </div>
 
+            </div>
+            <div class="successCenter">
 
-
+                <nav>
+                    <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
+                        <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab"
+                            data-bs-target="#cse-student" type="button" role="tab" aria-controls="nav-home"
+                            aria-selected="true">Computer Science and Engineering</button>
+                        <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#me-student"
+                            type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Mechanical
+                            Engineering</button>
+                        <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#ce-student"
+                            type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Civil
+                            Engineering</button>
+                        <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#ee-student"
+                            type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Electrical
+                            Engineering</button>
+                        <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#ece-student"
+                            type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Electronic and
+                            Comunication Engineering</button>
+                        <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#ie-student"
+                            type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Instrumentation
+                            Engineering</button>
+                    </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="cse-student" role="tabpanel"
+                        aria-labelledby="nav-home-tab">Computer Science Students</div>
+                    <div class="tab-pane fade" id="me-student" role="tabpanel" aria-labelledby="nav-profile-tab">
+                        Mechanical Students</div>
+                    <div class="tab-pane fade" id="ce-student" role="tabpanel" aria-labelledby="nav-contact-tab">
+                        Civil Students</div>
+                    <div class="tab-pane fade" id="ee-student" role="tabpanel" aria-labelledby="nav-contact-tab">
+                        Electrical Students</div>
+                    <div class="tab-pane fade" id="ece-student" role="tabpanel" aria-labelledby="nav-contact-tab">
+                        Electronic Students</div>
+                    <div class="tab-pane fade" id="ie-student" role="tabpanel" aria-labelledby="nav-contact-tab">
+                        Instrumentation Students</div>
+                </div>
             </div>
 
 
@@ -27,34 +64,57 @@
 
             <script>
 
-                function fetchData() {
-                    const branch = document.getElementById("branch").value;
-                    const year = document.getElementById("year").value;
+                function fetchData(branch, id) {
+                    // const branch = document.getElementById("branch").value;
+                    // const year = document.getElementById("year").value;
 
-                    if (branch == "" || year == "") {
+                    if (branch == "") {
                         return;
                     }
 
-                    var link = `/list?branch=${branch}&year=${year}`
+                    let years = ["firsts","seconds","thirds","fourths"]
 
-                    var request = new XMLHttpRequest();
+                    let divStr = "";
 
-                    request.open('GET', link, true);
+                    
 
-                    request.onload = function () {
-                        var obj = JSON.parse(this.response);
-                        console.log(obj);
-                        let str = ""
-                        obj.forEach((element) => {
-                            str += `<p id=${element._id}> ${element.firstName} | ${element.lastName} | ${element.gender}| ${element.city} | ${element.marks} | ${element.academicyear}</p>`;
-                            
-                        })
+                    function reqSend(link,year) {
+                        var request = new XMLHttpRequest();
 
-                        $("#data").html(str);
-                        // $("#data").html(obj[0]._id);
+                        request.open('GET', link, true);
+
+                        request.onload = function () {
+                            var obj = JSON.parse(this.response);
+                            console.log(obj);
+                            let str = ""
+                            obj.forEach((element) => {
+                                str += `<p id=${element._id}> ${element.firstName} | ${element.lastName} | ${element.gender}| ${element.city} | ${element.marks} | ${element.academicyear}</p>`;
+
+                            })
+                            divStr += `<h1>${year}</h1> `
+                            divStr += str;
+                            $("#" + id).html(divStr);
+                        }
+                        request.send();
                     }
-                    request.send();
+
+                    years.forEach( (year)=>{
+                        var link = `/list?branch=${branch}&year=${year}`
+                        reqSend(link,year);
+                    })
+
                 }
+
+                // cse-student
+
+                fetchData("cse", "cse-student");
+                fetchData("me", "me-student");
+                fetchData("ce", "ce-student");
+                fetchData("ee", "ee-student");
+                fetchData("ece", "ece-student");
+                fetchData("ie", "ie-student");
+                // fetchData("me", "seconds", "me-student");
+
 
 
 
